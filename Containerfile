@@ -72,11 +72,14 @@ RUN curl -sL https://github.com/rakshasa/rtorrent/releases/download/v${RTORRENT_
 
 FROM registry.access.redhat.com/ubi9/ubi-minimal:$RUNTIME_UBI_VERSION
 
+ARG RTORRENT_VERSION="0.15.1"
+
 # Configure runtime user
-RUN useradd -r -u 1001 -g 0 -d /opt/torrent -m torrent \
+RUN useradd -r -u 1001 -g 0 torrent \
     && mkdir -p /opt/torrent/{config,download,log,session,watch} \
     && chown -R torrent:0 /opt/torrent \
     && chmod -R g=u /opt/torrent
+ENV HOME=/opt/torrent
 
 USER torrent
 
@@ -97,7 +100,7 @@ EXPOSE 50000
 EXPOSE 62882
 
 LABEL name="Alveel/rtorrent" \
-      vendor="Alwyn Kik <alwyn@kik.pw>" \
+      vendor="Alwyn Kik <alwyn at kik dot pw>" \
       version=$RTORRENT_VERSION \
       release="1" \
       summary="rtorrent container image" \
