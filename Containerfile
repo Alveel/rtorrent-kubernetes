@@ -76,14 +76,14 @@ ARG RTORRENT_VERSION="0.15.1"
 
 # Configure runtime user
 RUN useradd -r -u 1001 -g 0 torrent \
-    && mkdir -p /opt/torrent/{config,download,log,session,watch} \
-    && chown -R torrent:0 /opt/torrent \
-    && chmod -R g=u /opt/torrent
-ENV HOME=/opt/torrent
+    && mkdir -p /opt/app-root/{config,download,log,session,watch} \
+    && chown -R torrent:0 /opt/app-root \
+    && chmod -R g=u /opt/app-root
+ENV HOME=/opt/app-root
 
 USER torrent
 
-WORKDIR /opt/torrent
+WORKDIR /opt/app-root
 
 # Copy the built binary from the builder stage as well as auxiliary files
 COPY --from=builder /home/builder/static/bin/rtorrent /usr/local/bin/rtorrent
@@ -91,7 +91,7 @@ COPY --chmod=550 entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY --chmod=664 rtorrent.rc.dist /usr/local/share/doc/rtorrent/
 
 # Expose the configuration and data directories
-VOLUME ["/opt/torrent/config", "/opt/torrent/download", "/opt/torrent/log", "/opt/torrent/session", "/opt/torrent/watch"]
+VOLUME ["/opt/app-root/config", "/opt/app-root/download", "/opt/app-root/log", "/opt/app-root/session", "/opt/app-root/watch"]
 
 # Expose the ports used by rtorrent
 # Listening port
