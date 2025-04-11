@@ -23,6 +23,12 @@ execute.throw = sh, -c, (cat,\
     "\"",(cfg.watch),"/load\" ",\
     "\"",(cfg.watch),"/start\" ")
 
+## Specific options for Flood
+method.redirect=load.throw,load.normal
+method.redirect=load.start_throw,load.start
+method.insert=d.down.sequential,value|const,0
+method.insert=d.down.sequential.set,value|const,0
+
 ## Listening port for incoming peer traffic (fixed; you can also randomize it)
 network.port_range.set = 50000-50000
 network.port_random.set = no
