@@ -34,7 +34,6 @@ WORKDIR /home/builder
 RUN mkdir -p /home/builder/static
 
 # Download and compile tinyxml2
-RUN echo https://github.com/leethomason/tinyxml2/archive/refs/tags/${TINYXML_VERSION}.tar.gz
 RUN curl -sL "https://github.com/leethomason/tinyxml2/archive/refs/tags/${TINYXML_VERSION}.tar.gz" | tar xz \
     && cd tinyxml2-${TINYXML_VERSION} \
     && mkdir build && cd build \

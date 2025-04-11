@@ -7,7 +7,7 @@ if [ "$1" = "rtorrent" ]; then
   # check if rtorrent.rc exists
   if [ ! -f "$rtorrentrc" ]; then
       echo "WARNING: $rtorrentrc not found! Copying default configuration."
-      cp /usr/share/doc/rtorrent/rtorrent.rc.dist "$rtorrentrc"
+      cp /usr/local/share/doc/rtorrent/rtorrent.rc.dist "$rtorrentrc"
   fi
 
   # remove any existing lock files
