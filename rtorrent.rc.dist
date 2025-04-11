@@ -11,7 +11,7 @@
 method.insert = cfg.basedir,  private|const|string, (cat,"/opt/app-root/")
 method.insert = cfg.download, private|const|string, (cat,(cfg.basedir),"download/")
 method.insert = cfg.logs,     private|const|string, (cat,(cfg.basedir),"log/")
-method.insert = cfg.logfile,  private|const|string, (cat,(cfg.logs),"rtorrent-",(system.time),".log")
+method.insert = cfg.logfile,  private|const|string, (cat,(cfg.logs),"rtorrent.log")
 method.insert = cfg.session,  private|const|string, (cat,(cfg.basedir),"session/")
 method.insert = cfg.watch,    private|const|string, (cat,(cfg.basedir),"watch/")
 
@@ -67,14 +67,13 @@ execute.nothrow = sh, -c, (cat, "echo >",\
 
 ## Other operational settings (check & adapt)
 encoding.add = UTF-8
+# umask 007 is what makes arbitrary UID work
 system.umask.set = 0007
 system.cwd.set = (directory.default)
 network.http.dns_cache_timeout.set = 25
 schedule2 = monitor_diskspace, 15, 60, ((close_low_diskspace, 1000M))
-#pieces.hash.on_completion.set = no
-#view.sort_current = seeding, greater=d.ratio=
-#keys.layout.set = qwerty
-#network.http.capath.set = "/etc/ssl/certs"
+pieces.hash.on_completion.set = yes
+network.http.capath.set = "/etc/ssl/certs"
 #network.http.ssl_verify_peer.set = 0
 #network.http.ssl_verify_host.set = 0
 
@@ -104,6 +103,11 @@ execute.nothrow = chmod,770,(cat,(cfg.basedir),rpc.socket)
 print = (cat, "Logging to ", (cfg.logfile))
 log.open_file = "log", (cfg.logfile)
 log.add_output = "info", "log"
+log.add_output = "error", "log"
+log.add_output = "critical", "log"
+# Uncomment any of these and restart if you need to troubleshoot
+#log.add_output = "info", "log"
+#log.add_output = "debug", "log"
 #log.add_output = "tracker_debug", "log"
 
 ### END of rtorrent.rc ###

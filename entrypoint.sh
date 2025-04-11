@@ -11,12 +11,18 @@ if [ "$1" = "rtorrent" ]; then
   fi
 
   # remove any existing lock files
-  rm -f /opt/app-root/rtorrent/session/*.lock
+  rm -f /opt/app-root/session/*.lock
 
-  # Run rtorrent
-  exec rtorrent -n -o import="$rtorrentrc"
-elif [ "$1" = "bash" ]; then # start bash
-    exec /usr/bin/env bash
+  # Run rtorrent and wait for the log file to be created
+  rtorrent -n -o import="$rtorrentrc" &
+  while [ ! -f /opt/app-root/log/rtorrent.log ]; do
+    sleep 0.1
+  done
+
+  # show the rtorrent log
+  tail -f /opt/app-root/log/rtorrent.log
+
 else
-    exec "$@"
+  # if the first argument is not "rtorrent", try to execute the command
+  exec "$@"
 fi
