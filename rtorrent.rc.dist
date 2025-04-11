@@ -98,8 +98,11 @@ schedule2 = watch_load, 11, 10, ((load.verbose, (cat, (cfg.watch), "load/*.torre
 schedule2 = watch_start, 10, 10, ((load.start_verbose, (cat, (cfg.watch), "start/*.torrent")))
 
 ## Run the rTorrent process as a daemon in the background
-## (and control via XMLRPC sockets)
+## (and control via JSON-RPC sockets)
 system.daemon.set = true
+# Disable XMLRPC and enable JSON-RPC
+network.rpc.use_xmlrpc.set = true
+network.rpc.use_jsonrpc.set = false
 network.scgi.open_local = (cat,(cfg.basedir),rpc.socket)
 execute.nothrow = chmod,770,(cat,(cfg.basedir),rpc.socket)
 

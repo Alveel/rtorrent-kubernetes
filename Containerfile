@@ -6,7 +6,7 @@ ARG RUNTIME_UBI_VERSION="9.5"
 FROM registry.access.redhat.com/ubi9/ubi:$BUILD_UBI_VERSION AS builder
 
 ARG TINYXML_VERSION="11.0.0"
-ARG RTORRENT_VERSION="0.15.1"
+ARG RTORRENT_VERSION="0.15.2"
 
 # Install dependencies
 RUN dnf -y update-minimal --security --sec-severity=Important --sec-severity=Critical \
@@ -71,7 +71,7 @@ RUN curl -sL https://github.com/rakshasa/rtorrent/releases/download/v${RTORRENT_
 
 FROM registry.access.redhat.com/ubi9/ubi-minimal:$RUNTIME_UBI_VERSION
 
-ARG RTORRENT_VERSION="0.15.1"
+ARG RTORRENT_VERSION="0.15.2"
 
 # Configure runtime user
 RUN useradd -r -u 1001 -g 0 torrent \
