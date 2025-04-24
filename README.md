@@ -1,5 +1,7 @@
 # Rtorrent for Kubernetes
 
+***THIS IS A WORK IN PROGRESS***
+
 Optionally with Flood for web UI. Running in daemon mode by default, with logs being sent to stdout.
 
 ## Usage
